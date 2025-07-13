@@ -1,4 +1,4 @@
 DOCKER COMMANDS:
 - run <docker compose up> to start the docker container
 - sudo lsof -i :5432 finds the process already running on the port
-- kill <PID>
+- sudo kill <PID>
