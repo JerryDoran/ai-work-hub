@@ -3,6 +3,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -10,6 +11,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { SignedOut } from '@/services/clerk/components/sign-in-status';
+import { Link, LogIn } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -20,13 +23,26 @@ export default function Home() {
             <SidebarTrigger />
             <span className='text-xl text-nowrap'>AI Work Hub</span>
           </SidebarHeader>
-          <SidebarContent>sidebar content</SidebarContent>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarMenu>
+                <SignedOut>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild className='cursor-pointer'>
+                      <Link href='/sign-in'>
+                        <LogIn className='mr-2 size-4' />
+                        <span className=''>Login</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SignedOut>
+              </SidebarMenu>
+            </SidebarGroup>
+          </SidebarContent>
           <SidebarFooter>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton className='cursor-pointer'>
-                  Logout
-                </SidebarMenuButton>
+                <SidebarMenuButton></SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarFooter>
