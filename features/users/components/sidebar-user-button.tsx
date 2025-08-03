@@ -15,7 +15,7 @@ async function SidebarUserSuspense() {
 
   return (
     <SidebarUserButtonClient
-      user={{ email: 'mario@test.com', name: 'Mario', imageUrl: '' }}
+      user={{ email: 'mario@test.com', name: 'Mario Kart', imageUrl: '' }}
     />
   );
 }
