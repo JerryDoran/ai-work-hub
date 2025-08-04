@@ -8,3 +8,6 @@ DRIZZLE SCRIPTS:
 - "db:generate": "drizzle-kit generate",
 - "db:migrate": "drizzle-kit migrate",
 - "db:studio": "drizzle-kit studio"
+
+INNGEST SCRIPT:
+-pm inngest
