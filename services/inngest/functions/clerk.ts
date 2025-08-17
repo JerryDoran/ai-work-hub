@@ -1,9 +1,9 @@
 import { env } from '@/data/env/server';
 import { inngest } from '../client';
 import { Webhook } from 'svix';
-import { verify } from 'crypto';
 import { NonRetriableError } from 'inngest';
 import { insertUser } from '@/features/users/db/users';
+import { insertUserNotificationSettings } from '@/features/users/db/user-notification-settings';
 
 function verifyWebhook({
   raw,
@@ -48,6 +48,12 @@ export const clerkCreateUser = inngest.createFunction(
       });
 
       return userData.id;
+    });
+
+    await step.run('create-user-notification-settings', async () => {
+      await insertUserNotificationSettings({
+        userId,
+      });
     });
   }
 );
