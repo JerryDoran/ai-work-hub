@@ -1,7 +1,7 @@
 DOCKER COMMANDS:
 - run <docker compose up> to start the docker container
 - sudo lsof -i :5432 finds the process already running on the port
-- sudo kill <PID>
+- sudo kill 138
 
 DRIZZLE SCRIPTS:
 - "db:push": "drizzle-kit push",
