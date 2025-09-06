@@ -9,10 +9,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import SidebarUserButton from '@/features/users/components/sidebar-user-button';
 import { SignedIn } from '@/services/clerk/components/sign-in-status';
 
-export default function AppSidebar({ content }: { content: React.ReactNode }) {
+type AppSidebarProps = {
+  content: React.ReactNode;
+  footerButton: React.ReactNode;
+  children: React.ReactNode;
+};
+
+export default function AppSidebar({
+  content,
+  footerButton,
+  children,
+}: AppSidebarProps) {
   return (
     <SidebarProvider className='overflow-y-hidden'>
       <AppSidebarClient>
@@ -25,14 +34,12 @@ export default function AppSidebar({ content }: { content: React.ReactNode }) {
           <SignedIn>
             <SidebarFooter>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarUserButton />
-                </SidebarMenuItem>
+                <SidebarMenuItem>{footerButton}</SidebarMenuItem>
               </SidebarMenu>
             </SidebarFooter>
           </SignedIn>
         </Sidebar>
-        <main className='flex-1'>kjdfklsdjfkladsjklfjsd</main>
+        <main className='flex-1'>{children}</main>
       </AppSidebarClient>
     </SidebarProvider>
   );
