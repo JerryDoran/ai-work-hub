@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import AppSidebar from '@/components/sidebar/app-sidebar';
 import SidebarNavMenuGroup from '@/components/sidebar/sidebar-nav-menu-group';
 import {
@@ -8,12 +9,25 @@ import {
 import SidebarOrganizationButton from '@/features/organizations/components/sidebar-organization-button';
 import { ClipboardList, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
+import { getCurrentOrganization } from '@/services/clerk/lib/get-current-auth';
+import { redirect } from 'next/navigation';
 
 export default function EmployerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  return (
+    <Suspense>
+      <LayoutSuspense>{children}</LayoutSuspense>
+    </Suspense>
+  );
+}
+
+async function LayoutSuspense({ children }: { children: React.ReactNode }) {
+  const { orgId } = await getCurrentOrganization();
+
+  if (orgId == null) return redirect('/organizations/select');
   return (
     <AppSidebar
       content={

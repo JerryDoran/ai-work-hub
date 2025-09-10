@@ -12,7 +12,14 @@ import {
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import { SignOutButton } from '@/services/clerk/components/auth-buttons';
 import { useClerk } from '@clerk/nextjs';
-import { ChevronsUpDown, LogOutIcon, Settings, UserIcon } from 'lucide-react';
+import {
+  ArrowLeftRight,
+  Building2,
+  ChevronsUpDown,
+  CreditCard,
+  LogOutIcon,
+  UserRoundCogIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 
 type User = {
@@ -32,7 +39,7 @@ export default function SidebarOrganizationButtonClient({
   organization: Organization;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
-  const { openUserProfile } = useClerk();
+  const { openOrganizationProfile } = useClerk();
 
   return (
     <DropdownMenu>
@@ -57,15 +64,26 @@ export default function SidebarOrganizationButtonClient({
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
-            openUserProfile();
+            openOrganizationProfile();
             setOpenMobile(false);
           }}
         >
-          <UserIcon className='size-4' /> Profile
+          <Building2 className='size-4' /> Manage Organization
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href='/user-settings/notifications'>
-            <Settings className='size-4' /> Settings
+          <Link href='/employer/user-settings'>
+            <UserRoundCogIcon className='size-4' /> User Settings
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href='/employer/pricing'>
+            <CreditCard className='size-4' /> Change Plan
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href='/organizations/select'>
+            <ArrowLeftRight className='size-4' /> Switch Organizations
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
