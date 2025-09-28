@@ -4,12 +4,12 @@ import {
   locationRequirements,
   wageIntervals,
 } from '@/drizzle/schema';
-import z from 'zod';
+import { z } from 'zod';
 
 export const jobListingSchema = z
   .object({
-    title: z.string().min(1),
-    description: z.string().min(1),
+    title: z.string().min(1, 'Title is required'),
+    description: z.string().min(1, 'Description is required'),
     experienceLevel: z.enum(experienceLevels),
     locationRequirement: z.enum(locationRequirements),
     type: z.enum(jobListingTypes),
@@ -42,3 +42,5 @@ export const jobListingSchema = z
       path: ['state'],
     }
   );
+
+  

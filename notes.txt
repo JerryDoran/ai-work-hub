@@ -1,3 +1,11 @@
+Web Dev Simplified: AI-Powered Job Board
+- Learn about setting up a global cache system
+- Setting up Clerk authentication
+- Learn about integrating inngest functions with clerk authentication
+- Learn how to spin up a docker container with a postgresql database
+- Learn more about drizzle orm
+
+
 DOCKER COMMANDS:
 - run <docker compose up> to start the docker container
 - sudo lsof -i :5432 finds the process already running on the port
