@@ -13,6 +13,15 @@ import {
 } from '@/components/ui/form';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectContent,
+  SelectTrigger,
+} from '@/components/ui/select';
+import { wageIntervals } from '@/drizzle/schema';
+import { formatWageInterval } from '../lib/formatters';
 
 export default function JobListingForm() {
   const form = useForm({
@@ -62,21 +71,48 @@ export default function JobListingForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Wage</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type='number'
-                    value={field.value ?? ''}
-                    className='rounded-r-none'
-                    onChange={(e) =>
-                      field.onChange(
-                        isNaN(e.target.valueAsNumber)
-                          ? undefined
-                          : e.target.valueAsNumber
-                      )
-                    }
+                <div className='flex'>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type='number'
+                      value={field.value ?? ''}
+                      className='rounded-r-none'
+                      onChange={(e) =>
+                        field.onChange(
+                          isNaN(e.target.valueAsNumber)
+                            ? null
+                            : e.target.valueAsNumber
+                        )
+                      }
+                    />
+                  </FormControl>
+                  <FormField
+                    name='wageInterval'
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          value={field.value ?? ''}
+                          onValueChange={(val) => field.onChange(val ?? null)}
+                        >
+                          <FormControl>
+                            <SelectTrigger className='rounded-l-none'>
+                              / <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {wageIntervals.map((interval) => (
+                              <SelectItem key={interval} value={interval}>
+                                {formatWageInterval(interval)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
                   />
-                </FormControl>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
