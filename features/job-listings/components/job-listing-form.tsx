@@ -6,6 +6,7 @@ import { jobListingSchema } from '../actions/schemas';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,6 +23,7 @@ import {
 } from '@/components/ui/select';
 import { wageIntervals } from '@/drizzle/schema';
 import { formatWageInterval } from '../lib/formatters';
+import StateSelectItems from './state-select-items';
 
 export default function JobListingForm() {
   const form = useForm({
@@ -34,7 +36,7 @@ export default function JobListingForm() {
       type: 'full-time',
       wage: null,
       wageInterval: 'yearly',
-      state: null,
+      stateAbbreviation: null,
       city: null,
     },
   });
@@ -113,6 +115,99 @@ export default function JobListingForm() {
                     )}
                   />
                 </div>
+                <FormDescription>Optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className='grid grid-cols-1 @md:grid-cols-2 gap-x-4 gap-y-6 items-start'>
+          <div className='grid grid-cols-1 @xs:grid-cols-2 gap-x-2 gap-y-6 items-start'>
+            <FormField
+              name='city'
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input {...field} value={field.value ?? ''} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name='stateAbbreviation'
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <Select
+                    value={field.value ?? ''}
+                    onValueChange={(val) => field.onChange(val ?? null)}
+                  >
+                    <FormControl>
+                      <SelectTrigger className='w-full'>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <StateSelectItems />
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            name='wage'
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Wage</FormLabel>
+                <div className='flex'>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type='number'
+                      value={field.value ?? ''}
+                      className='rounded-r-none'
+                      onChange={(e) =>
+                        field.onChange(
+                          isNaN(e.target.valueAsNumber)
+                            ? null
+                            : e.target.valueAsNumber
+                        )
+                      }
+                    />
+                  </FormControl>
+                  <FormField
+                    name='wageInterval'
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          value={field.value ?? ''}
+                          onValueChange={(val) => field.onChange(val ?? null)}
+                        >
+                          <FormControl>
+                            <SelectTrigger className='rounded-l-none'>
+                              / <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {wageIntervals.map((interval) => (
+                              <SelectItem key={interval} value={interval}>
+                                {formatWageInterval(interval)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormDescription>Optional</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

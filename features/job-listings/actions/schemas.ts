@@ -15,7 +15,7 @@ export const jobListingSchema = z
     type: z.enum(jobListingTypes),
     wage: z.number().int().positive().min(1).nullable(),
     wageInterval: z.enum(wageIntervals).nullable(),
-    state: z
+    stateAbbreviation: z
       .string()
       .transform((value) => (value.trim() === '' ? null : value))
       .nullable(),
@@ -42,5 +42,3 @@ export const jobListingSchema = z
       path: ['state'],
     }
   );
-
-  
